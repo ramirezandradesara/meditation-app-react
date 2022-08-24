@@ -5,6 +5,11 @@ import { useContext } from 'react'
 import './Meditation.css'
 import { Context } from './reducer/Reducer'
 
+
+/**
+ * Componente con todas las funcionalidades
+ * @returns {JSX.Element}
+ */
 function Meditation() {
 
     const {
