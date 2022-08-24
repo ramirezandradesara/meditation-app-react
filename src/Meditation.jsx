@@ -1,110 +1,106 @@
-import React from 'react'
+import React, { useReducer } from 'react'
+import { useRef } from 'react'
+import { useState } from 'react'
 import { useContext } from 'react'
 import './Meditation.css'
 import { Context } from './reducer/Reducer'
 
 function Meditation() {
-    
-    // const {state, dispatch} = useContext(Context)
+
+    const {
+        state,
+        dispatch
+    }
+        = useContext(Context)
+
+    const minutes = useRef()
+    const seconds = useRef()
 
 
-    function displayedTime() {
-        let seconds = document.querySelector('.seconds')
-        let minutes = document.querySelector('.minutes')
-        let pause = document.querySelector('.pause')
+    // function ref() {
+    //     minutes.current.innerHTML = '00'
+    // }
 
-        let sec = "00";
-        let min = "00";
+    const [intervaloSec, setIntervaloSec] = useState()
+    const [intervaloMin, setIntervaloMin] = useState()
 
-        setInterval(function () {
-            if (sec < 9) {
-                sec = "0" + (parseInt(sec) + 1);
-                seconds.innerHTML = sec;
-                console.log(sec);
-            }
-            if (sec >= 9) {
-                sec = parseInt(sec) + 1;
-                seconds.innerHTML = sec;
-                console.log(sec);
-            }
-            if (sec === 59) {
-                sec = "00";
-                seconds.innerHTML = sec;
-                console.log(sec);
-            }
-        }, 1000)
+    //PLAY FOR SECONDS AND MINUTES
+    const runTime = () => {
+        setIntervaloSec(
+            setInterval(() => {
+                dispatch({ type: 'PLAYSEC' })
+            }, 1000)
+        )
 
-        setInterval(function () {
-            if (min < 9) {
-                min = "0" + (parseInt(min) + 1);
-                minutes.innerHTML = min;
-                console.log(min);
-            } else {
-                min = "00";
-                minutes.innerHTML = min;
-                console.log(min);
-            }
-        }, 60000)
+        setIntervaloMin(
+            setInterval(() => {
+                dispatch({ type: 'PLAYMIN' })
+            }, 60000)
+        )
+    };
 
-        pause.onClick = function () {
-            clearInterval()
-            console.log("hola!");
-        }
-
+    //PAUSE 
+    const clearRunTime = () => {
+        clearInterval(intervaloSec)
+        clearInterval(intervaloMin)
+    }
+    //STOP 
+    const stopRunTime = () => {
+        clearInterval(intervaloSec)
+        clearInterval(intervaloMin)
+        dispatch({ type: 'STOP' })
     }
 
-
-
     return (
-  
-            <div className='meditation'>
-                <h1>Time to relax</h1>
-                <div className="time-btns">
-                    <button
-                        className="btn-time"
-                        onClick={displayedTime}
-                        data-time="300"
-                    >5 min
-                    </button>
-                    <button
-                        className="btn-time"
-                        onClick={displayedTime}
-                        data-time="600"
-                    >10 min
-                    </button>
-                    <button
-                        className="btn-time"
-                        onClick={displayedTime}
-                        data-time="900"
-                    >15 min
-                    </button>
-                </div>
 
-                <div className="time-display">
-                    <span className='minutes'>00</span>
-                    <span>:</span>
-                    <span className='seconds'>00</span>
-                </div>
-
-                <div className='control-time-btns'>
-                    <button
-                        className='start-btn'
-                    >Start</button>
-                    <button
-                        className='pause-btn'
-                    >Pause</button>
-                    <button
-                        className='stop-btn'
-                    >Stop</button>
-                </div>
-                <div className="sound-btns">
-                    <button className="btn-sound">Rain</button>
-                    <button className="btn-sound">Beach</button>
-                    <button className="btn-sound">Mountain</button>
-                    <button className="btn-sound">No Sound</button>
-                </div>
-
+        <div className='meditation'>
+            <h1>Time to relax</h1>
+            <div className="time-btns">
+                <button
+                    className="btn-time"
+                    // onClick={() => dispatch({ type: 'DECREMENT' })}
+                    data-time="300"
+                >5 min
+                </button>
+                <button
+                    className="btn-time"
+                    data-time="600"
+                >10 min
+                </button>
+                <button
+                    className="btn-time"
+                    data-time="900"
+                >15 min
+                </button>
             </div>
+
+            <div className="time-display">
+                <span className='minutes' ref={minutes}>{state.minutes}</span>
+                <span>:</span>
+                <span className='seconds' ref={seconds}>{state.seconds}</span>
+            </div>
+
+            <div className='control-time-btns'>
+                <button
+                    className='start-btn'
+                    onClick={() => runTime()}
+                >Start</button>
+                <button
+                    className='pause-btn'
+                    onClick={() => clearRunTime()}
+                >Pause</button>
+                <button
+                    className='stop-btn'
+                    onClick={() => stopRunTime()}
+                >Stop</button>
+            </div>
+            <div className="sound-btns">
+                <button className="btn-sound">Rain</button>
+                <button className="btn-sound">Beach</button>
+                <button className="btn-sound">Mountain</button>
+            </div>
+
+        </div>
 
     )
 }
