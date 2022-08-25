@@ -9,6 +9,7 @@ const Context = createContext()
  * @param {*} props 
  * @returns 
  * @TODO el cronómetro sea de dos números: 00:09
+ * @TODO que cuando llegue a 5, 10 o 15 minutos termine
  */
 const Provider = (props) => {
 
