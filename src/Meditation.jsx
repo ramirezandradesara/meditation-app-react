@@ -1,10 +1,11 @@
 import React, { useReducer } from 'react'
 import { useRef } from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
 import './Meditation.css'
 import { Context } from './reducer/Reducer'
-
+import rainSound from './sounds/rain.mp3'
 
 /**
  * Componente con todas las funcionalidades
@@ -56,6 +57,23 @@ function Meditation() {
         dispatch({ type: 'STOP' })
     }
 
+
+    const rain = useRef()
+
+    function playSound() {
+        // console.log(rain.current.getAttribute('dataSound'));
+        const sound = rain.current.getAttribute('src')
+        sound.play()
+        // console.log(rain.current.getAttribute('src'));
+        rain.current.getAttribute('src').play()
+        new Audio('./sounds/rain.mp3').play()
+    }
+
+    useEffect(() => {
+        // playSound()
+    }, [])
+
+
     return (
 
         <div className='meditation'>
@@ -100,8 +118,18 @@ function Meditation() {
                 >Stop</button>
             </div>
             <div className="sound-btns">
-                <button className="btn-sound">Rain</button>
-                <button className="btn-sound">Beach</button>
+                <button
+                    className="btn-sound"
+                    dataSound="src\sounds\rain.mp3"
+                    data-video="./video/rain.mp4"
+                    onClick={() => playSound()}>Rain</button>
+                <button className="btn-sound"
+                >Beach</button>
+                <audio class="song" src="./sounds/rain.mp3" ref={rain} controls>
+                    {/* <source src="./sounds/rain.mp3" ref={rain} /> */}
+
+                </audio>
+                
                 <button className="btn-sound">Mountain</button>
             </div>
 
