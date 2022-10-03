@@ -3,11 +3,10 @@ import { useRef } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
-import './Meditation.css'
+import './Meditation.scss'
 import { Context } from './reducer/Reducer'
 import rainSound from './sounds/rain.mp3'
 import ringer from "./sounds/rain.mp3";
-import { HiSun } from 'react-icons/hi';
 import { BsFillCloudRainFill, BsSunFill } from 'react-icons/bs'
 import { FaMountain } from 'react-icons/fa'
 
@@ -26,16 +25,15 @@ function Meditation() {
     const minutes = useRef()
     const seconds = useRef()
 
-
-    // function ref() {
-    //     minutes.current.innerHTML = '00'
-    // }
-
     const [intervaloSec, setIntervaloSec] = useState()
     const [intervaloMin, setIntervaloMin] = useState()
+    const [startPlaying , setStartPlaying] = useState(false)
 
     //PLAY FOR SECONDS AND MINUTES
     const runTime = () => {
+        dispatch({ type: 'START' })
+        setStartPlaying(true)
+     
         setIntervaloSec(
             setInterval(() => {
                 dispatch({ type: 'PLAYSEC' })
@@ -88,9 +86,13 @@ function Meditation() {
         // playSound()
     }, [])
 
+ 
+    if (state.seconds === -1 && startPlaying) {
+        state.seconds = 59
+    }
+
     const audio = new Audio(ringer);
     audio.loop = true;
-
 
     return (
 
@@ -98,27 +100,29 @@ function Meditation() {
             <h1>Time to relax</h1>
 
             <div className="time-display">
-                <span className='minutes' ref={minutes}>{state.minutes}</span>
+                <span className='minutes'>{state.minutes < 10 ? '0' + state.minutes : state.minutes}</span>
                 <span>:</span>
-                <span className='seconds' ref={seconds}>{state.seconds}</span>
+                <span className='seconds'>{state.seconds < 10 ? '0' + state.seconds : state.seconds}</span>
             </div>
-            
+
             <div className="btns-container">
 
                 <div className="time-btns">
                     <button
                         className="btn-time"
-                        // onClick={() => dispatch({ type: 'DECREMENT' })}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5 })}
                         data-time="300"
                     >5'
                     </button>
                     <button
                         className="btn-time"
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 10 })}
                         data-time="600"
                     >10'
                     </button>
                     <button
                         className="btn-time"
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 15 })}
                         data-time="900"
                     >15'
                     </button>
@@ -162,7 +166,7 @@ function Meditation() {
                 <div className='control-time-btns'>
                     <button
                         className='start-btn'
-                        onClick={() => runTime()}
+                        onClick={() => {runTime()}}
                     >Start</button>
                     <button
                         className='pause-btn'

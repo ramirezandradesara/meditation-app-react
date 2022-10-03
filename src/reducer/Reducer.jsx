@@ -33,13 +33,28 @@ const Provider = (props) => {
             case 'PLAYSEC':
                 return {
                     ...state,
-                    seconds: state.seconds < 59 ? state.seconds + 1 : 0
+                    seconds: state.seconds <= 59  ? state.seconds - 1 : 0
                 };
+
             case 'PLAYMIN':
                 return {
                     ...state,
-                    minutes: state.minutes < 59 ? state.minutes + 1 : 0
+                    minutes: state.minutes <= 59 ? state.minutes - 1 : 0
                 };
+
+            case "SET_TIMER":
+                return {
+                    ...state,
+                    minutes: action.payload
+                };
+
+            case "START":
+                return {
+                    ...state,
+                    minutes: state.minutes - 1,
+                    seconds: 59
+                };
+
             case "STOP":
                 return {
                     minutes: 0,
@@ -49,50 +64,6 @@ const Provider = (props) => {
                 throw new Error(`Unknown action type ${action.type}`);
         }
     };
-
-
-    /* Lógica que se encuentra en el reducer y en meditation.jsx ^_____^
-    
-    function displayedTime() {
-         let seconds = document.querySelector('.seconds')
-         let minutes = document.querySelector('.minutes')
- 
-         let pause = document.querySelector('.pause')
- 
-         let sec = "00";
-         let min = "00";
- 
-         setInterval(function () {
-             if (sec < 9) {
-                 sec = "0" + (parseInt(sec) + 1);
-                 seconds.innerHTML = sec;
-                 console.log(sec);
-             }
-             if (sec >= 9) {
-                 sec = parseInt(sec) + 1;
-                 seconds.innerHTML = sec;
-                 console.log(sec);
-             }
-             if (sec === 59) {
-                 sec = "00";
-                 seconds.innerHTML = sec;
-                 console.log(sec);
-             }
-         }, 1000)
- 
-         setInterval(function () {
-             if (min < 9) {
-                 min = "0" + (parseInt(min) + 1);
-                 minutes.innerHTML = min;
-                 console.log(min);
-             } else {
-                 min = "00";
-                 minutes.innerHTML = min;
-                 console.log(min);
-             }
-         }, 60000)
-     }*/
-
 
     const [state, dispatch] = useReducer(reducer, initialState)
 

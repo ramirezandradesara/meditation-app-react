@@ -1,5 +1,5 @@
 import Meditation from './Meditation';
-import './App.css';
+import './App.scss';
 import { Provider } from './reducer/Reducer';
 
 function App() {

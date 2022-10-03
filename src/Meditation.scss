@@ -1,0 +1,76 @@
+ @import './App.scss';
+
+ .meditation {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     max-width: 100vw;
+     max-height: 100vh;
+ }
+
+ h1 {
+     margin: 45px;
+ }
+
+ .time-display {
+     min-width: 200px;
+
+     @include breakpoints(sm) {
+         min-width: 250px;
+     }
+
+     height: 250px;
+     border: 1px solid #000;
+     border-radius: 50%;
+
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: #000;
+     font-size: 40px;
+     margin-bottom: 50px;
+ }
+
+ .btns-container {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     min-width: 100%;
+     max-height: 50%;
+     background-color: #e9e9e99c;
+     border-radius: 66px 66px 0px 0px;
+ }
+
+ .time-btns,
+ .sound-btns,
+ .control-time-btns {
+     width: 50%;
+
+     @include breakpoints(sm) {
+         width: 90%;
+     }
+
+     display: flex;
+     justify-content: space-around;
+     margin-top: 60px;
+ }
+
+ .time-btns button,
+ .sound-btns button {
+     width: 60px;
+     height: 60px;
+     border: 1px solid transparent;
+     border-radius: 50%;
+     /* color: #ac5f5f; */
+     background-color: rgb(214, 214, 214);
+     font-size: 24px;
+ }
+
+ .control-time-btns button {
+     width: 100px;
+     height: 30px;
+     border: 1px solid transparent;
+     border-radius: 30%;
+     background-color: rgb(214, 214, 214);
+ }

@@ -1,0 +1,41 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  cursor: pointer;
+}
+
+@mixin breakpoints($point) {
+  // mobile
+  @if $point==sm {
+    @media (max-width: 480px) {
+      @content;
+    }
+  }
+
+  // tablet
+  @if $point==md {
+    @media (min-width: 768px) and (max-width: 1024px) {
+      @content;
+    }
+
+    // desktop
+    @if $point==lg {
+      @media (min-width: 1024px) and (max-width: 1920px) {
+        @content;
+      }
+    }
+  }
+}
