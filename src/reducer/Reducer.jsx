@@ -1,15 +1,11 @@
 import { createContext, useReducer } from "react";
 
-
 const Context = createContext()
-
 
 /**
  * 
  * @param {*} props 
  * @returns 
- * @TODO el cronómetro sea de dos números: 00:09
- * @TODO que cuando llegue a 5, 10 o 15 minutos termine
  */
 const Provider = (props) => {
 
@@ -20,11 +16,7 @@ const Provider = (props) => {
 
     /**
      * 
-     * @param {*} state 
-     * @param {{
-     * payload,
-     * type
-     * }} action 
+     * @param {{ payload, type }} action 
      * @returns 
      */
 
@@ -35,26 +27,22 @@ const Provider = (props) => {
                     ...state,
                     seconds: state.seconds <= 59  ? state.seconds - 1 : 0
                 };
-
             case 'PLAYMIN':
                 return {
                     ...state,
                     minutes: state.minutes <= 59 ? state.minutes - 1 : 0
                 };
-
             case "SET_TIMER":
                 return {
                     ...state,
                     minutes: action.payload
                 };
-
             case "START":
                 return {
                     ...state,
                     minutes: state.minutes - 1,
                     seconds: 59
                 };
-
             case "STOP":
                 return {
                     minutes: 0,
