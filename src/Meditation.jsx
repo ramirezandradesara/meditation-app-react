@@ -29,10 +29,12 @@ function Meditation() {
     const [startPlaying, setStartPlaying] = useState(false)
     const [selectSong, setSelectSong] = useState(null)
 
+
     //PLAY FOR SECONDS AND MINUTES
     const runTime = () => {
         selectSong.loop = true;
         selectSong.play();
+       
 
         dispatch({ type: 'START' })
         setStartPlaying(true)
@@ -54,6 +56,7 @@ function Meditation() {
     const clearRunTime = () => {
         clearInterval(intervaloSec)
         clearInterval(intervaloMin)
+        selectSong.pause();
     };
 
     //STOP 
@@ -68,12 +71,20 @@ function Meditation() {
         state.seconds = 59
     }
 
+    if (state.minutes === 0 && state.seconds === 0 && startPlaying) {
+        stopRunTime()
+    }
+
+
     const audioRain = new Audio(soundRain);
     const audioBeach = new Audio(soundBeach);
     // const audioMountain = new Audio(ringer);
 
     return (
         <div className='meditation'>
+            {/* <video loop>
+                <source src="./video/rain.mp4" type="video/mp4"/>
+            </video> */}
             <h1>Time to relax</h1>
             <div className="time-display">
                 <span className='minutes'>{state.minutes < 10 ? '0' + state.minutes : state.minutes}</span>
@@ -85,7 +96,7 @@ function Meditation() {
                 <div className="time-btns">
                     <button
                         className="btn-time"
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5 })}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 1 })}
                         data-time="300"
                     >5'
                     </button>
@@ -116,8 +127,8 @@ function Meditation() {
                     </button>
                     <button
                         className="btn-sound"
-                        // onClick={() => setSelectSong(audioMountain)}
-                        >
+                    // onClick={() => setSelectSong(audioMountain)}
+                    >
                         <FaMountain />
                     </button>
                 </div>
