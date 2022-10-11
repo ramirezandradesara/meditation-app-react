@@ -7,6 +7,7 @@ import { BsFillCloudRainFill, BsSunFill } from 'react-icons/bs'
 import { FaMountain } from 'react-icons/fa'
 import soundRain from "./sounds/rain.mp3";
 import soundBeach from "./sounds/beach.mp3";
+import swal from 'sweetalert';
 // import soundMountain from "./sounds/rain.mp3";
 
 /**
@@ -22,10 +23,18 @@ function Meditation() {
     const [intervaloSec, setIntervaloSec] = useState()
     const [intervaloMin, setIntervaloMin] = useState()
     const [selectSong, setSelectSong] = useState(null)
+    const [selectTime, setSelectTime] = useState(null)
+    
 
 
     //PLAY FOR SECONDS AND MINUTES
     const runTime = () => {
+        if (selectSong === null || selectTime === null) {
+            swal("Select time and background music to start meditating.", {
+                buttons: [null, "Got it!"],
+              });
+        }
+
         selectSong.loop = true;
         selectSong.play();
 
@@ -89,19 +98,19 @@ function Meditation() {
                 <div className="time-btns">
                     <button
                         className="btn-time"
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5 })}
+                        onClick={() => {dispatch({ type: 'SET_TIMER', payload: 5 }); setSelectTime(true)}}
                         data-time="300"
                     >5'
                     </button>
                     <button
                         className="btn-time"
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 10 })}
+                        onClick={() => {dispatch({ type: 'SET_TIMER', payload: 10 }); setSelectTime(true)}}
                         data-time="600"
                     >10'
                     </button>
                     <button
                         className="btn-time"
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 15 })}
+                        onClick={() => {dispatch({ type: 'SET_TIMER', payload: 15 }); setSelectTime(true)}}
                         data-time="900"
                     >15'
                     </button>
