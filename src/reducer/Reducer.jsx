@@ -11,8 +11,9 @@ const Provider = (props) => {
 
     const initialState = {
         minutes: 0,
-        seconds: 0
-    }
+        seconds: 0,
+        isPlaying: false
+    };
 
     /**
      * 
@@ -25,12 +26,12 @@ const Provider = (props) => {
             case 'PLAYSEC':
                 return {
                     ...state,
-                    seconds: state.seconds <= 59  ? state.seconds - 1 : 0
+                    seconds: state.seconds <= 59  ? state.seconds - 1 : 0,
                 };
             case 'PLAYMIN':
                 return {
                     ...state,
-                    minutes: state.minutes <= 59 ? state.minutes - 1 : 0
+                    minutes: state.minutes <= 59 ? state.minutes - 1 : 0,
                 };
             case "SET_TIMER":
                 return {
@@ -41,13 +42,16 @@ const Provider = (props) => {
                 return {
                     ...state,
                     minutes: state.minutes - 1,
-                    seconds: 59
+                    seconds: 59,
+                    isPlaying: true
                 };
             case "STOP":
                 return {
                     minutes: 0,
-                    seconds: 0
+                    seconds: 0,
+                    isPlaying: false
                 };
+
             default:
                 throw new Error(`Unknown action type ${action.type}`);
         }

@@ -1,11 +1,8 @@
-import React, { useReducer } from 'react'
-import { useRef } from 'react'
-import { useEffect } from 'react'
+import React from 'react'
 import { useState } from 'react'
 import { useContext } from 'react'
 import './Meditation.scss'
 import { Context } from './reducer/Reducer'
-import rainSound from './sounds/rain.mp3'
 import { BsFillCloudRainFill, BsSunFill } from 'react-icons/bs'
 import { FaMountain } from 'react-icons/fa'
 import soundRain from "./sounds/rain.mp3";
@@ -15,10 +12,8 @@ import soundBeach from "./sounds/beach.mp3";
 /**
  * Componente con todas las funcionalidades
  * @returns {JSX.Element}
- * @todo pausar 
- * @todo al terminar tiempo, que se detenga
  * @todo alerta cuando se empiece sin seleccionar sonido o tiempo
- * @todo que el boton de start desaparezca cuando se inicie el tiempo
+ * @todo que el circulo muestre el tiempo
  */
 function Meditation() {
 
@@ -26,7 +21,6 @@ function Meditation() {
 
     const [intervaloSec, setIntervaloSec] = useState()
     const [intervaloMin, setIntervaloMin] = useState()
-    const [startPlaying, setStartPlaying] = useState(false)
     const [selectSong, setSelectSong] = useState(null)
 
 
@@ -34,10 +28,9 @@ function Meditation() {
     const runTime = () => {
         selectSong.loop = true;
         selectSong.play();
-       
+
 
         dispatch({ type: 'START' })
-        setStartPlaying(true)
 
         setIntervaloSec(
             setInterval(() => {
@@ -53,11 +46,11 @@ function Meditation() {
     };
 
     //PAUSE 
-    const clearRunTime = () => {
-        clearInterval(intervaloSec)
-        clearInterval(intervaloMin)
-        selectSong.pause();
-    };
+    // const clearRunTime = () => {
+    //     clearInterval(intervaloSec)
+    //     clearInterval(intervaloMin)
+    //     selectSong.pause();
+    // };
 
     //STOP 
     const stopRunTime = () => {
@@ -67,11 +60,11 @@ function Meditation() {
         selectSong.pause();
     };
 
-    if (state.seconds === -1 && startPlaying) {
+    if (state.seconds === -1 && state.isPlaying) {
         state.seconds = 59
     }
 
-    if (state.minutes === 0 && state.seconds === 0 && startPlaying) {
+    if (state.minutes === 0 && state.seconds === 0 && state.isPlaying) {
         stopRunTime()
     }
 
@@ -96,7 +89,7 @@ function Meditation() {
                 <div className="time-btns">
                     <button
                         className="btn-time"
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 1 })}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5 })}
                         data-time="300"
                     >5'
                     </button>
@@ -132,22 +125,24 @@ function Meditation() {
                         <FaMountain />
                     </button>
                 </div>
-
                 <div className='control-time-btns'>
-                    <button
-                        className='start-btn'
-                        onClick={() => { runTime() }}
-                    >Start</button>
-                    <button
+                    {!state.isPlaying ?
+
+                        <button
+                            className='start-btn'
+                            onClick={() => { runTime() }}
+                        >Start</button>
+                        :
+                        <button
+                            className='stop-btn'
+                            onClick={() => stopRunTime()}
+                        >Stop</button>
+                    }
+                    {/* <button
                         className='pause-btn'
                         onClick={() => clearRunTime()}
-                    >Pause</button>
-                    <button
-                        className='stop-btn'
-                        onClick={() => stopRunTime()}
-                    >Stop</button>
+                    >Pause</button> */}
                 </div>
-
             </div>
         </div>
 
