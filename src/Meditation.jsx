@@ -7,8 +7,8 @@ import { BsFillCloudRainFill, BsSunFill } from 'react-icons/bs'
 import { FaMountain } from 'react-icons/fa'
 import soundRain from "./sounds/rain.mp3";
 import soundBeach from "./sounds/beach.mp3";
-import swal from 'sweetalert';
 // import soundMountain from "./sounds/rain.mp3";
+import swal from 'sweetalert';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useEffect } from 'react'
@@ -17,26 +17,27 @@ import { useEffect } from 'react'
  * Componente con todas las funcionalidades
  * @returns {JSX.Element}
  * @todo add background video
+ * @todo estilos para el boton seleccionado
  */
 function Meditation() {
 
     const { state, dispatch } = useContext(Context)
-    
+
     const audioRain = new Audio(soundRain);
     const audioBeach = new Audio(soundBeach);
-    // const audioMountain = new Audio(ringer);
+    // const audioMountain = new Audio(soundMountain);
 
     const [intervaloSec, setIntervaloSec] = useState()
     const [intervaloMin, setIntervaloMin] = useState()
 
     /**
      * Función que se llama en el botón "start" para empezar la sesión de meditación. 
-     * Si no se ha elegido un tiempo música de fondo antes, aparecerá una alerta.
-     * Una vez elegido, comienza a correr el reloj y inicia la música.
+     * Si no se ha elegido un tiempo y/o música de fondo antes, aparecerá una alerta.
+     * Una vez elegido, comienza a correr el reloj e inicia la música.
      */
     const runTime = () => {
         if (state.music === null || state.timeData === null) {
-            swal("Select time and background music to start meditating.", {
+            return swal("Select time and background music to start meditating.", {
                 buttons: [null, "Got it!"],
             });
         } else {
@@ -64,21 +65,19 @@ function Meditation() {
      * Función que se llama en el botón "stop" y también cuando se termina el tiempo
      */
     const stopRunTime = () => {
+        dispatch({ type: 'STOP' })
         clearInterval(intervaloSec)
         clearInterval(intervaloMin)
-        dispatch({ type: 'STOP' })
         state.music.pause();
     };
-
+    
     useEffect(() => {
         if (state.seconds === -1 && state.isPlaying) {
-            state.seconds = 59
+            dispatch({ type: 'RESET_SECONDS' })
         };
 
         if (state.minutes === 0 && state.seconds === 0 && state.isPlaying) {
             stopRunTime()
-            clearInterval(intervaloSec)
-            clearInterval(intervaloMin)
         };
 
     }, [state.isPlaying, state.minutes, state.seconds])
@@ -97,7 +96,7 @@ function Meditation() {
                 <div className="time-btns">
                     <button
                         className="btn-time"
-                        onClick={() =>  dispatch({ type: 'SET_TIMER', payload: 5, timeData: 0.33 }) }
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5, timeData: 0.33 })}
                         data-time="300"
                     >5'
                     </button>
@@ -108,38 +107,37 @@ function Meditation() {
                     </button>
                     <button
                         className="btn-time"
-                        onClick={() =>  dispatch({ type: 'SET_TIMER', payload: 15, timeData: 0.1111111111111111 })}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 15, timeData: 0.1111111111111111 })}
                     >15'
                     </button>
                 </div>
                 <div className="sound-btns">
                     <button
                         className="btn-sound"
-                        onClick={() =>  dispatch({ type: 'SET_MUSIC', payload: audioBeach})}
-                        >
+                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioBeach })}
+                    >
                         <BsSunFill />
                     </button>
                     <button
                         className="btn-sound"
-                        onClick={() =>  dispatch({ type: 'SET_MUSIC', payload: audioRain})}
-                        >
+                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioRain })}
+                    >
                         <BsFillCloudRainFill />
                     </button>
                     <button
                         className="btn-sound"
-                    // onClick={() => setSelectSong(audioMountain)}
+                    // onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioMountain })}
                     ><FaMountain />
                     </button>
                 </div>
                 <div className='control-time-btns'>
                     {
-                        !state.isPlaying ?
-                            <button
+                        !state.isPlaying
+                            ? <button
                                 className='start-btn'
-                                onClick={() => { runTime() }}
+                                onClick={() =>  runTime() }
                             >Start</button>
-                            :
-                            <button
+                            : <button
                                 className='stop-btn'
                                 onClick={() => stopRunTime()}
                             >Stop</button>
@@ -148,6 +146,6 @@ function Meditation() {
             </div>
         </div>
     )
-}
+};
 
 export default Meditation

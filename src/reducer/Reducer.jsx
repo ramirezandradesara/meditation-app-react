@@ -46,10 +46,15 @@ const Provider = (props) => {
                     isPlaying: true,
                 };
             case "SET_MUSIC":
-                return{
+                return {
                     ...state,
                     music: action.payload
-                }
+                };
+            case "RESET_SECONDS":
+                return {
+                    ...state,
+                    seconds: 59
+                };
             case "STOP":
                 return {
                     minutes: 0,
