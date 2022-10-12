@@ -12,21 +12,20 @@ const Provider = (props) => {
     const initialState = {
         minutes: 0,
         seconds: 0,
-        isPlaying: false
+        isPlaying: false,
+        percentage: 0.1,
+        timeData: null,
+        music: null
     };
-
-    /**
-     * 
-     * @param {{ payload, type }} action 
-     * @returns 
-     */
 
     const reducer = (state, action) => {
         switch (action.type) {
             case 'PLAYSEC':
                 return {
                     ...state,
-                    seconds: state.seconds <= 59  ? state.seconds - 1 : 0,
+                    seconds: state.seconds <= 59 ? state.seconds - 1 : 0,
+                    percentage: state.percentage + state.timeData
+
                 };
             case 'PLAYMIN':
                 return {
@@ -36,19 +35,26 @@ const Provider = (props) => {
             case "SET_TIMER":
                 return {
                     ...state,
-                    minutes: action.payload
+                    minutes: action.payload,
+                    timeData: action.timeData
                 };
             case "START":
                 return {
                     ...state,
                     minutes: state.minutes - 1,
                     seconds: 59,
-                    isPlaying: true
+                    isPlaying: true,
                 };
+            case "SET_MUSIC":
+                return{
+                    ...state,
+                    music: action.payload
+                }
             case "STOP":
                 return {
                     minutes: 0,
                     seconds: 0,
+                    timeData: null,
                     isPlaying: false
                 };
 
