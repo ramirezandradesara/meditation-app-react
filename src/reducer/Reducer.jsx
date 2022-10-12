@@ -15,7 +15,8 @@ const Provider = (props) => {
         isPlaying: false,
         percentage: 0.1,
         timeData: null,
-        music: null
+        music: null,
+        video: null
     };
 
     const reducer = (state, action) => {
@@ -48,7 +49,8 @@ const Provider = (props) => {
             case "SET_MUSIC":
                 return {
                     ...state,
-                    music: action.payload
+                    music: action.payload,
+                    video: action.video
                 };
             case "RESET_SECONDS":
                 return {
@@ -60,7 +62,8 @@ const Provider = (props) => {
                     minutes: 0,
                     seconds: 0,
                     timeData: null,
-                    isPlaying: false
+                    isPlaying: false,
+                    percentage: 0.1
                 };
 
             default:

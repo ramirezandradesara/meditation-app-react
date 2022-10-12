@@ -1,5 +1,5 @@
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Work Sans', sans-serif;
   margin: 0;
   padding: 0;
   margin: 0;
@@ -33,7 +33,7 @@ a {
 
     // desktop
     @if $point==lg {
-      @media (min-width: 1024px) and (max-width: 1920px) {
+      @media (min-width: 1025px) and (max-width: 1920px) {
         @content;
       }
     }

@@ -9,15 +9,19 @@ import soundRain from "./sounds/rain.mp3";
 import soundBeach from "./sounds/beach.mp3";
 // import soundMountain from "./sounds/rain.mp3";
 import swal from 'sweetalert';
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useEffect } from 'react'
+import beachVideo from './videos/beach.mp4'
+import rainVideo from './videos/rain.mp4'
+import { useRef } from 'react'
 
 /**
  * Componente con todas las funcionalidades
  * @returns {JSX.Element}
- * @todo add background video
+ * @todo seleccinar musica y tiempo por default
  * @todo estilos para el boton seleccionado
+ * @todo reiniciar 
  */
 function Meditation() {
 
@@ -30,6 +34,8 @@ function Meditation() {
     const [intervaloSec, setIntervaloSec] = useState()
     const [intervaloMin, setIntervaloMin] = useState()
 
+    const video = useRef(null)
+
     /**
      * Función que se llama en el botón "start" para empezar la sesión de meditación. 
      * Si no se ha elegido un tiempo y/o música de fondo antes, aparecerá una alerta.
@@ -40,10 +46,11 @@ function Meditation() {
             return swal("Select time and background music to start meditating.", {
                 buttons: [null, "Got it!"],
             });
+
         } else {
             state.music.loop = true;
             state.music.play();
-
+            video.current.play() 
             dispatch({ type: 'START' })
 
             setIntervaloSec(
@@ -69,9 +76,11 @@ function Meditation() {
         clearInterval(intervaloSec)
         clearInterval(intervaloMin)
         state.music.pause();
+        video.current.pause() 
     };
-    
+
     useEffect(() => {
+
         if (state.seconds === -1 && state.isPlaying) {
             dispatch({ type: 'RESET_SECONDS' })
         };
@@ -80,19 +89,30 @@ function Meditation() {
             stopRunTime()
         };
 
+
     }, [state.isPlaying, state.minutes, state.seconds])
 
+    console.log(state.isPlaying);
 
     return (
         <div className='meditation'>
+            <div class="vid-container">
+                <video src={state.video === null ? rainVideo : state.video} loop muted ref={video} />
+            </div>
             <h1>Time to relax</h1>
-            <div style={{ width: 200, height: 200, marginBottom: '40px' }}>
+            <div style={{ width: window.innerWidth <= 768 ? 250 : 210, height: window.innerWidth <= 768 ? 250 : 210, marginBottom: '10px' }}>
                 <CircularProgressbar
+                    styles={buildStyles({
+                        textColor: '#fff',
+                        pathColor: '#777492',
+                        tailColor: 'rgba(255,255,255,.2)',
+                        pathTransitionDuration: 1.2,
+                    })}
                     value={state.percentage}
                     text={`${state.minutes < 10 ? '0' + state.minutes : state.minutes}:${state.seconds < 10 ? '0' + state.seconds : state.seconds}`}
                 />;
             </div>
-            <div className="btns-container">
+            <div className="btns-container" style={{display: state.isPlaying ? 'none' : 'flex'}}>
                 <div className="time-btns">
                     <button
                         className="btn-time"
@@ -114,13 +134,13 @@ function Meditation() {
                 <div className="sound-btns">
                     <button
                         className="btn-sound"
-                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioBeach })}
+                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioBeach, video: beachVideo})}
                     >
                         <BsSunFill />
                     </button>
                     <button
                         className="btn-sound"
-                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioRain })}
+                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioRain, video: rainVideo })}
                     >
                         <BsFillCloudRainFill />
                     </button>
@@ -130,12 +150,13 @@ function Meditation() {
                     ><FaMountain />
                     </button>
                 </div>
+            </div>
                 <div className='control-time-btns'>
                     {
                         !state.isPlaying
                             ? <button
                                 className='start-btn'
-                                onClick={() =>  runTime() }
+                                onClick={() => { runTime() }}
                             >Start</button>
                             : <button
                                 className='stop-btn'
@@ -143,7 +164,6 @@ function Meditation() {
                             >Stop</button>
                     }
                 </div>
-            </div>
         </div>
     )
 };
