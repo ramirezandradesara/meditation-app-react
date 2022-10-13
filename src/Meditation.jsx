@@ -19,9 +19,6 @@ import { useRef } from 'react'
 /**
  * Componente con todas las funcionalidades
  * @returns {JSX.Element}
- * @todo seleccinar musica y tiempo por default
- * @todo estilos para el boton seleccionado
- * @todo reiniciar 
  */
 function Meditation() {
 
@@ -92,10 +89,7 @@ function Meditation() {
             stopRunTime()
         };
 
-
     }, [state.isPlaying, state.minutes, state.seconds])
-
-    console.log(state.isPlaying);
 
     return (
         <div className='meditation'>
@@ -123,31 +117,32 @@ function Meditation() {
             >
                 <div className="time-btns">
                     <button
-                        className="btn-time"
+                        className={state.minutes === 5 ? "btn-time--active" : "btn-time"}
                         onClick={() => dispatch({ type: 'SET_TIMER', payload: 5, timeData: 0.33 })}
                         data-time="300"
                     >5'
                     </button>
                     <button
-                        className="btn-time"
+                        className={state.minutes === 10 ? "btn-time--active" : "btn-time"}
                         onClick={() => dispatch({ type: 'SET_TIMER', payload: 10, timeData: 0.1666666666666667 })}
                     >10'
                     </button>
                     <button
-                        className="btn-time"
+                        // className="btn-time"
+                        className={state.minutes === 15 ? "btn-time--active" : "btn-time"}
                         onClick={() => dispatch({ type: 'SET_TIMER', payload: 15, timeData: 0.1111111111111111 })}
                     >15'
                     </button>
                 </div>
                 <div className="sound-btns">
                     <button
-                        className="btn-sound"
+                        className={state.video === beachVideo ? "btn-sound--active" : "btn-sound"}
                         onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioBeach, video: beachVideo })}
                     >
                         <BsSunFill />
                     </button>
                     <button
-                        className="btn-sound"
+                        className={state.video === rainVideo ? "btn-sound--active" : "btn-sound"}
                         onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioRain, video: rainVideo })}
                     >
                         <BsFillCloudRainFill />

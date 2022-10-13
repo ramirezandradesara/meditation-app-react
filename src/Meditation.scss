@@ -21,6 +21,8 @@
      font-family: 'Work Sans', sans-serif;
      font-style: italic;
      text-align: center;
+     letter-spacing: 0.6px;
+     line-height: 1.3;
 
      @include breakpoints(sm) {
          margin-bottom: 40px;
@@ -81,11 +83,12 @@
      margin-top: 45px;
  }
 
- .time-btns button,
- .sound-btns button {
+ .btn-time,
+ .btn-sound {
      width: 60px;
      height: 60px;
      border: 1px solid transparent;
+     //  border: 2px solid #777492;
      border-radius: 50%;
      color: #56546B;
      background: rgba(255, 255, 255, 0.637);
@@ -93,7 +96,17 @@
      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
  }
 
- 
+ .btn-time--active,
+ .btn-sound--active {
+     width: 60px;
+     height: 60px;
+     border-radius: 50%;
+     color: #56546B;
+     background: rgba(255, 255, 255, 0.637);
+     font-size: 24px;
+     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
+     border: 2px solid #726f8f;
+ }
 
  .time-btns button:hover,
  .sound-btns button:hover {
@@ -101,6 +114,7 @@
      color: #57556e;
      transition: 0.3s;
  }
+
  .control-time-btns button {
      color: #fff;
      background: rgba(255, 255, 255, 0.26);
@@ -132,7 +146,7 @@
      height: 100%;
  }
 
- /* Sweet alert*/ 
+ /* Sweet alert*/
 
  .swal-button {
      background-color: #777492;
