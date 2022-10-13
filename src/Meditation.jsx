@@ -43,14 +43,13 @@ function Meditation() {
      */
     const runTime = () => {
         if (state.music === null || state.timeData === null) {
-            return swal("Select time and background music to start meditating.", {
+            return swal("You need to set a timer and a background music to start.", {
                 buttons: [null, "Got it!"],
             });
-
         } else {
             state.music.loop = true;
             state.music.play();
-            video.current.play() 
+            video.current.play()
             dispatch({ type: 'START' })
 
             setIntervaloSec(
@@ -76,7 +75,11 @@ function Meditation() {
         clearInterval(intervaloSec)
         clearInterval(intervaloMin)
         state.music.pause();
-        video.current.pause() 
+        video.current.pause()
+
+        swal("You finish your meditation session! Come back whenever you need to relax.", {
+            buttons: [null, "Thanks!"],
+        });
     };
 
     useEffect(() => {
@@ -100,7 +103,8 @@ function Meditation() {
                 <video src={state.video === null ? rainVideo : state.video} loop muted ref={video} />
             </div>
             <h1>Time to relax</h1>
-            <div style={{ width: window.innerWidth <= 768 ? 250 : 210, height: window.innerWidth <= 768 ? 250 : 210, marginBottom: '10px' }}>
+            <h4>Select time and background music to start meditating</h4>
+            <div style={{ width: window.innerWidth <= 768 ? 230 : 210, height: window.innerWidth <= 768 ? 230 : 210, marginBottom: '10px' }}>
                 <CircularProgressbar
                     styles={buildStyles({
                         textColor: '#fff',
@@ -110,9 +114,13 @@ function Meditation() {
                     })}
                     value={state.percentage}
                     text={`${state.minutes < 10 ? '0' + state.minutes : state.minutes}:${state.seconds < 10 ? '0' + state.seconds : state.seconds}`}
-                />;
+                />
             </div>
-            <div className="btns-container" style={{display: state.isPlaying ? 'none' : 'flex'}}>
+            <div
+                // className={state.isPlaying ? "btns-container-hidden" : "btns-container"}
+                className="btns-container"
+                style={{ display: state.isPlaying ? 'none' : 'flex' }}
+            >
                 <div className="time-btns">
                     <button
                         className="btn-time"
@@ -134,7 +142,7 @@ function Meditation() {
                 <div className="sound-btns">
                     <button
                         className="btn-sound"
-                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioBeach, video: beachVideo})}
+                        onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioBeach, video: beachVideo })}
                     >
                         <BsSunFill />
                     </button>
@@ -151,19 +159,19 @@ function Meditation() {
                     </button>
                 </div>
             </div>
-                <div className='control-time-btns'>
-                    {
-                        !state.isPlaying
-                            ? <button
-                                className='start-btn'
-                                onClick={() => { runTime() }}
-                            >Start</button>
-                            : <button
-                                className='stop-btn'
-                                onClick={() => stopRunTime()}
-                            >Stop</button>
-                    }
-                </div>
+            <div className='control-time-btns'>
+                {
+                    !state.isPlaying
+                        ? <button
+                            className='start-btn'
+                            onClick={() => runTime()}
+                        >Start</button>
+                        : <button
+                            className='stop-btn'
+                            onClick={() => stopRunTime()}
+                        >Stop</button>
+                }
+            </div>
         </div>
     )
 };

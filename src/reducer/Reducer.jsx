@@ -63,7 +63,9 @@ const Provider = (props) => {
                     seconds: 0,
                     timeData: null,
                     isPlaying: false,
-                    percentage: 0.1
+                    percentage: 0.1,
+                    music: null,
+                    video: null
                 };
 
             default:

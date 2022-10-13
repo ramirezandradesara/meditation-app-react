@@ -12,7 +12,19 @@
  h1 {
      color: #FFFFFF;
      margin-top: 40px;
-     margin-bottom: 60px;
+     margin-bottom: 11px;
+ }
+
+ h4 {
+     color: #FFFFFF;
+     margin-bottom: 30px;
+     font-family: 'Work Sans', sans-serif;
+     font-style: italic;
+     text-align: center;
+
+     @include breakpoints(sm) {
+         margin-bottom: 40px;
+     }
  }
 
  .time-display {
@@ -41,26 +53,28 @@
      min-width: 100%;
      max-height: 50%;
      border-radius: 66px 66px 0px 0px;
-     transition: opacity 1s ease-out;
+     opacity: 1;
 
      @include breakpoints(sm) {
-        //  margin-top: 30px;
+         //  margin-top: 30px;
      }
+ }
+
+ .btns-container-hidden {
+     display: none;
+     opacity: 0;
+     transition: opacity 5s ease-out;
  }
 
  .time-btns,
  .sound-btns,
  .control-time-btns {
-     width: 50%;
+     width: 45%;
 
      @include breakpoints(sm) {
          width: 90%;
          margin-top: 65px;
      }
-
-    //  @include breakpoints(md) {
-    //      margin-top: 77px;
-    //  }
 
      display: flex;
      justify-content: space-around;
@@ -76,13 +90,20 @@
      color: #56546B;
      background: rgba(255, 255, 255, 0.637);
      font-size: 24px;
-
-
+     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
  }
 
+ 
+
+ .time-btns button:hover,
+ .sound-btns button:hover {
+     background: #fff;
+     color: #57556e;
+     transition: 0.3s;
+ }
  .control-time-btns button {
-     color: #56546B;
-     background: rgba(255, 255, 255, 0.637);
+     color: #fff;
+     background: rgba(255, 255, 255, 0.26);
      font-size: 16px;
      width: 110px;
      height: 40px;
@@ -92,13 +113,17 @@
      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.12);
  }
 
+
+ .control-time-btns button:hover {
+     background: #777492;
+     transition: 0.3s;
+ }
+
  video {
      width: 100%;
      height: 100%;
      object-fit: cover;
      position: fixed;
-     //  top: 0%;
-     //  left: 0%;
      z-index: -10;
  }
 
@@ -107,8 +132,12 @@
      height: 100%;
  }
 
- // proggress bar
+ /* Sweet alert*/ 
 
- .CircularProgressbar .CircularProgressbar-text {
-     fill: #fff;
+ .swal-button {
+     background-color: #777492;
+ }
+
+ .swal-text {
+     text-align: center;
  }
