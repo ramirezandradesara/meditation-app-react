@@ -37,13 +37,13 @@ const Provider = (props) => {
                 return {
                     ...state,
                     minutes: action.payload,
-                    timeData: action.timeData
+                    timeData: 100 / (action.payload * 60)
                 };
             case "START":
                 return {
                     ...state,
                     minutes: state.minutes - 1,
-                    seconds: 59,
+                    seconds: 3,
                     isPlaying: true,
                 };
             case "SET_MUSIC":

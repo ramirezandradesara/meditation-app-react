@@ -1,6 +1,7 @@
 # Meditation App
 
 Aplicación para realizar sesiones de meditación desarrollado con React y JavaScript.
+Resultado final: 👉🏽 https://meditation-app-react.netlify.app/ 👈🏽
 
 ## Cómo iniciar el proyecto
 

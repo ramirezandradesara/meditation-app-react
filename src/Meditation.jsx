@@ -118,19 +118,17 @@ function Meditation() {
                 <div className="time-btns">
                     <button
                         className={state.minutes === 5 ? "btn-time--active" : "btn-time"}
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5, timeData: 0.33 })}
-                        data-time="300"
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5})}
                     >5'
                     </button>
                     <button
                         className={state.minutes === 10 ? "btn-time--active" : "btn-time"}
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 10, timeData: 0.1666666666666667 })}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 10})}
                     >10'
                     </button>
                     <button
-                        // className="btn-time"
                         className={state.minutes === 15 ? "btn-time--active" : "btn-time"}
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 15, timeData: 0.1111111111111111 })}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 15})}
                     >15'
                     </button>
                 </div>
