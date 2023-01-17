@@ -43,7 +43,7 @@ const Provider = (props) => {
                 return {
                     ...state,
                     minutes: state.minutes - 1,
-                    seconds: 3,
+                    seconds: 59,
                     isPlaying: true,
                 };
             case "SET_MUSIC":
