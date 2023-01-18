@@ -12,8 +12,8 @@ import swal from 'sweetalert';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useEffect } from 'react'
-import beachVideo from './videos/beach.mp4'
-import rainVideo from './videos/rain.mp4'
+import beachVideo from './videos/beach2.mp4'
+import rainVideo from './videos/rain2.mp4'
 import { useRef } from 'react'
 
 /**
