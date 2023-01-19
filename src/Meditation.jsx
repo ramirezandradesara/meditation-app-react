@@ -90,7 +90,7 @@ function Meditation() {
                 <video src={state.video === null ? rainVideo : state.video} loop muted ref={video} />
             </div>
             <h1>Time to relax</h1>
-            <h4>Select time and background music to start meditating</h4>
+            <p>Select time and background music to start meditating</p>
             <div style={{ width: window.innerWidth <= 768 ? 230 : 210, height: window.innerWidth <= 768 ? 230 : 210, marginBottom: '10px' }}>
                 <CircularProgressbar
                     styles={buildStyles({
@@ -110,35 +110,41 @@ function Meditation() {
             >
                 <div className="time-btns">
                     <button
+                        aria-label='five minutes'
                         className={state.minutes === 5 ? "btn-time--active" : "btn-time"}
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5})}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 5 })}
                     >5'
                     </button>
                     <button
+                        aria-label='ten minutes'
                         className={state.minutes === 10 ? "btn-time--active" : "btn-time"}
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 10})}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 10 })}
                     >10'
                     </button>
                     <button
+                        aria-label='fifteen minutes'
                         className={state.minutes === 15 ? "btn-time--active" : "btn-time"}
-                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 15})}
+                        onClick={() => dispatch({ type: 'SET_TIMER', payload: 15 })}
                     >15'
                     </button>
                 </div>
                 <div className="sound-btns">
                     <button
+                        aria-label='beach sound'
                         className={state.video === beachVideo ? "btn-sound--active" : "btn-sound"}
                         onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioBeach, video: beachVideo })}
                     >
                         <BsSunFill />
                     </button>
                     <button
+                        aria-label='rain sound'
                         className={state.video === rainVideo ? "btn-sound--active" : "btn-sound"}
                         onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioRain, video: rainVideo })}
                     >
                         <BsFillCloudRainFill />
                     </button>
                     <button
+                        aria-label='mountain sound'
                         className="btn-sound"
                     // onClick={() => dispatch({ type: 'SET_MUSIC', payload: audioMountain })}
                     ><FaMountain />
@@ -149,10 +155,12 @@ function Meditation() {
                 {
                     !state.isPlaying
                         ? <button
+                            aria-label='start'
                             className='start-btn'
                             onClick={() => runTime()}
                         >Start</button>
                         : <button
+                            aria-label='stop'
                             className='stop-btn'
                             onClick={() => stopRunTime()}
                         >Stop</button>
