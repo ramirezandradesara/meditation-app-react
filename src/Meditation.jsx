@@ -54,12 +54,6 @@ function Meditation() {
                     dispatch({ type: 'PLAYSEC' })
                 }, 1000)
             );
-
-            setIntervaloMin(
-                setInterval(() => {
-                    dispatch({ type: 'PLAYMIN' })
-                }, 60000)
-            );
         };
     };
 
@@ -70,7 +64,6 @@ function Meditation() {
     const stopRunTime = () => {
         dispatch({ type: 'STOP' })
         clearInterval(intervaloSec)
-        clearInterval(intervaloMin)
         state.music.pause();
         video.current.pause()
 
@@ -93,7 +86,7 @@ function Meditation() {
 
     return (
         <div className='meditation'>
-            <div class="vid-container">
+            <div className="vid-container">
                 <video src={state.video === null ? rainVideo : state.video} loop muted ref={video} />
             </div>
             <h1>Time to relax</h1>

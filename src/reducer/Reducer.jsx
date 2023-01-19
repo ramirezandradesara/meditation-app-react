@@ -26,12 +26,6 @@ const Provider = (props) => {
                     ...state,
                     seconds: state.seconds <= 59 ? state.seconds - 1 : 0,
                     percentage: state.percentage + state.timeData
-
-                };
-            case 'PLAYMIN':
-                return {
-                    ...state,
-                    minutes: state.minutes <= 59 ? state.minutes - 1 : 0,
                 };
             case "SET_TIMER":
                 return {
@@ -55,7 +49,8 @@ const Provider = (props) => {
             case "RESET_SECONDS":
                 return {
                     ...state,
-                    seconds: 59
+                    seconds: 59,
+                    minutes: state.minutes - 1,
                 };
             case "STOP":
                 return {
@@ -80,8 +75,7 @@ const Provider = (props) => {
             value={{
                 state,
                 dispatch
-            }}
-        >
+            }}>
             {props.children}
         </Context.Provider>
     )
